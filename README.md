@@ -1,3 +1,19 @@
+- [Notes on Exercise 1](#notes-on-exercise-1)
+   * [Assembly output](#assembly-output)
+   * [Binaries and flags](#binaries-and-flags)
+   * [Debugging](#debugging)
+- [Notes on Exercise 2](#notes-on-exercise-2)
+   * [Pre-processing](#pre-processing)
+   * [Compilation](#compilation)
+   * [Assemble](#assemble)
+   * [Linker](#linker)
+   * [Note on VSCode](#note-on-vscode)
+- [Notes on exercise 3](#notes-on-exercise-3)
+- [Notes on exercise 4 and 5](#notes-on-exercise-4-and-5)
+- [Notes on exercise 6](#notes-on-exercise-6)
+- [Notes on exercise 7](#notes-on-exercise-7)
+- [Notes on exercise 8](#notes-on-exercise-8)
+
 ### Notes on Exercise 1
 
 #### Assembly output
@@ -86,8 +102,10 @@ main:
 
 - `.LFE0`: (Local Function End) End of a function.
 - `.size`: Indicates the size of a function or symbol. Here, it says that main has size of `main` is the address from here (`.`) backwards (`-`) to the symbol `main`.
-- `.ident`: Identification of how he program was compiled and when.
+- `.ident`: Identification of how the program was compiled and when.
 - The other section part can be ignored, basically means that this program can run in a stack that is non-executable (i.e. no code can be executed from the stack).
+
+Some nice references about why we use certain registers and what the `q` and `l` at the end of instructions mean can be found [here](https://electronicsreference.com/assembly-language/assembly-language-registers/) and [here](https://github.com/aw-junaid/Hacking-Tools/blob/master/Assembly%20language/New%20Assembly%20Work/Assembly%20Language/Data%20Organization%3A%20Bits%2C%20Nibbles%2C%20Words%2C%20Double%20Words%2C%20Quad%20Words%20and%20Long%20Words.md).
 
 #### Binaries and flags
 
@@ -118,7 +136,7 @@ Let us learn about linking! ([Source for image](https://www3.ntu.edu.sg/home/ehc
 
 So first we pre-process the `C` file to make sure that we expand the headers and macros via `cpp hello.c > hello.i`. This does not mean C++, but *C pre-processor*.
 
-For example, part of the output include `extern int printf (const char *__restrict __format, ...);`, which comes from the `stdio.h` file.
+For example, part of the output include `extern int printf (const char *__restrict __format, ...);`, which comes from the `stdio.h` file. This is still valid `C` syntax.
 
 #### Compilation
 
@@ -208,7 +226,7 @@ int main() {
   int i, j, *p, *q;
   i = 5; // variable i stored at address &i holds the value 5
   p = &i; // pointer p now stores address of i
-  *p = 7; // the content at address &i (i.e. variable i) will now store the value 7 (this is called ponter dereferencing)
+  *p = 7; // the content at address &i (i.e. variable i) will now store the value 7 (this is called pionter dereferencing)
   j = 3; // variable j stored at address &j holds the value 3
   p = &j; // pointer p now stores the address of j (note that is it just 4 bytes above &i if the compiler chooses to put them side-by-side)
   q = p; // q holds the same address as p
@@ -223,7 +241,7 @@ We can be funky and refer to the address of `p` by using `&p`.
 
 ### Notes on exercise 4 and 5
 
-In `C`, a pointer and an array are basically the same thing. For example, `char msg[] = "Hello World";` will reserve a region of memory of 12*1=12 bytes, and every byte is considered to be a new element in the array.
+In `C`, a pointer and an array are basically the same thing (kinda, an array contains information about its size whereas a pointer does not). For example, `char msg[] = "Hello World";` will reserve a region of memory of 12*1=12 bytes, and every byte is considered to be a new element in the array.
 
 The variable `msg` now points to the beginning of this reserved region, so you can effectively move it up and down the array by incrementing *(msg + i) for some value integer `i`. If you want to permanently change point to the second element of the array, use `msg += 1`.
 
